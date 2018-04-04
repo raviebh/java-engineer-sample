@@ -52,6 +52,39 @@ public interface AccountResource {
 					})
 	public Response findAllAccounts();
 	
+	
+	@GET
+	@Path("/getaccount/{id}")
+	@Produces({MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_JSON})
+	@ApiOperation(
+			value = "Get Account Resource",
+			notes = "Returns all the accounts in ResourceCollection representation format",
+			response = AccountResponse.class)
+	@ApiResponses(
+			value = {
+					@ApiResponse(code = 200, message = "OK"),
+					@ApiResponse(code = 204, message = "No Content")
+					
+					})
+	public Response getAccount(@PathParam("id") Long id);
 
+
+	@POST
+	@Path("/createaccount")
+	@Produces({MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_JSON})
+	@ApiOperation(
+			value = "Get Account Resource",
+			notes = "Returns all the accounts in ResourceCollection representation format",
+			response = AccountResponse.class)
+	@ApiResponses(
+			value = {
+					@ApiResponse(code = 200, message = "OK"),
+					@ApiResponse(code = 204, message = "No Content"),	
+					@ApiResponse(code = 201, message = "Success"),
+					@ApiResponse(code = 409, message = "Conflicted")	
+					})
+	public Response createAccount(Account a);
 	
 }
