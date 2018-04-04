@@ -2,8 +2,10 @@ package com.att.demo.resource;
 
 import java.util.List;
 
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
@@ -44,8 +46,31 @@ public class AccountResourceImpl implements AccountResource {
 		Link link = Link.fromUri(baseUrl).rel("self").build();		
 		ResourceCollection<Account> resource = new ResourceCollection<>(accounts);
 		return Response.ok(resource).links(link).build();
+	}
+
+	@Override
+	public Response getAccount(String name) {
+		Account account = accountService.findByName(name);	
+		if (account == null) {
+			return Response.noContent().build();
+		}		
+		Link link = Link.fromUri(baseUrl).rel("self").build();		
+		Resource<Account> resource = new Resource<Account>(account);
+		return Response.ok(resource).links(link).build();
+	}
+
+	@Override
+	public Response createAccount(Account account) {
+		if(account == null){
+			return Response.status(Status.BAD_REQUEST).build();
+		}
+		if(accountService.findByName(account.getName()) != null){
+			return Response.status(Status.CONFLICT).build();
+		}
+		accountService.saveAccount(account);
+		//UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+		return Response.status(Status.CREATED).build();
 	}	
-	
 
 	
 
