@@ -4,21 +4,18 @@ import java.util.List;
 
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
-import javax.ws.rs.core.UriInfo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import com.att.demo.exception.CustomError;
 import com.att.demo.model.Account;
-import com.att.demo.model.representation.Resource;
+import com.att.demo.model.User;
 import com.att.demo.model.representation.ResourceCollection;
 import com.att.demo.service.AccountService;
+import com.att.demo.service.UserService;
 
 /**
  * This is the Controller class for Account mService
@@ -32,6 +29,9 @@ public class AccountResourceImpl implements AccountResource {
 
 	@Autowired
 	AccountService accountService; //Service which will do all data retrieval/manipulation work
+	
+	@Autowired
+	UserService userService;
 
 	private static String baseUrl = "/accounts";
 
@@ -46,7 +46,39 @@ public class AccountResourceImpl implements AccountResource {
 		return Response.ok(resource).links(link).build();
 	}	
 	
-
+	@Override
+	public Response findAccountById(long id) {
+		Account account = accountService.findById(id);
+		
+		if(account == null) {
+			return Response.status(404).type("application/json").entity(new CustomError("Account with id " + id +" not found", "NOT_FOUND")).build();
+		}
+		return Response.ok(account).build();
+	}
 	
+	@Override
+	public Response createAccount(Account account) {
+		boolean exists = accountService.isAccountExist(account);
+		
+		if(exists) {
+			return Response.status(409).type("application/json").entity(new CustomError("Unable to create. A Account with name already exist", "CONFLICTED")).build();
+		}
+		accountService.saveAccount(account);
+		return Response.status(201).type("text/plain").entity("Account created!").build();
+	}
+
+	@Override
+	public Response findAccountByAndUsers(long id) {
+		Account account = accountService.findById(id);
+		
+		if(account == null) {
+			return Response.status(404).type("application/json").entity(new CustomError("Account with id " + id +" not found", "NOT_FOUND")).build();
+		}
+		List<User> usrList = userService.findAccountByAndUsers(id);
+		
+		Link link = Link.fromUri(baseUrl).rel("self").build();		
+		ResourceCollection<User> resource = new ResourceCollection<>(usrList);
+		return Response.ok(resource).links(link).build();
+	}
 
 }

@@ -47,7 +47,7 @@ public class AccountResourceComponentTest {
 					.statusCode(200);
 	}
 	
-	/*@Test
+	@Test
 	public void testCreateAccount_success() {
 		
 			
@@ -87,7 +87,7 @@ public class AccountResourceComponentTest {
 			.get(uri + "/12345")
 			.then()
 				.statusCode(200);
-	}*/
+	}
 	
 	
 }
