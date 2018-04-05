@@ -23,8 +23,8 @@ public class AccountResourceComponentTest {
 	@LocalServerPort
 	protected int randomServerPort;
 	
-	private String uri ="/accounts";
-	
+	private String uri ="/accounts/findAllAccounts";
+
 	@Before
 	public void setUp() throws Exception {
 		RestAssured.baseURI = "http://" + InetAddress.getLocalHost().getHostName() + ":" + randomServerPort + "/api";

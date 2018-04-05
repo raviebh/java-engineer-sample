@@ -11,7 +11,11 @@ import io.restassured.specification.RequestSpecification;
 
 public class AccountServiceIT {
 	
-	private String uri ="/accounts";
+	private String uri ="/accounts/findAllAccounts";
+	
+	private String uri2 ="/accounts/createAccount";
+	
+	private String uri3 ="/accounts/getAccount";
 		
 	@Before
 	public void setUp() throws Exception {
@@ -42,8 +46,8 @@ public class AccountServiceIT {
 		
 			
 		Account account = new Account();
-		account.setId(54321);
-		account.setName("test-create");
+		account.setId(44);
+		account.setName("Account4");
 		
 		givenBaseSpec()
 			.body(account)
@@ -55,20 +59,26 @@ public class AccountServiceIT {
 	
 	@Test
 	public void testCreateUser_failure() {
-		//TO-DO	
+		
+	Account account = new Account();
+	account.setId(44);
+	account.setName("Account4");
+	
+	givenBaseSpec()
+		.body(account)
+		.when()
+			.post(uri2)
+			.then()
+				.statusCode(201);
 	}
 	
 	@Test
 	public void testGetAccount_success() {
 		
-		Account account = new Account();
-		account.setId(12345);
-		account.setName("test-get");
-		
 		givenBaseSpec()
-			.body(account)
+			.body("Account4")
 			.when()
-				.post(uri)
+				.post(uri3)
 				.then()
 				.statusCode(201);
 
