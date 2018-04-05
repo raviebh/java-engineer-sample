@@ -9,8 +9,9 @@ import io.swagger.annotations.ApiModelProperty;
 description = "An Account domain object")
 public class Account implements Serializable {
 
+	@ApiModelProperty(dataType = "long", required = true, value = "Description : Account ID.")
 	private long id;
-	
+	@ApiModelProperty(dataType = "string", required = true, value = "Description : Account Name.")	
 	private String name;
 	
 	/**
