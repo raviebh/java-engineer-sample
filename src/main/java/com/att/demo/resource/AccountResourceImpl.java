@@ -19,6 +19,7 @@ import com.att.demo.model.Account;
 import com.att.demo.model.representation.Resource;
 import com.att.demo.model.representation.ResourceCollection;
 import com.att.demo.service.AccountService;
+import com.att.demo.resource.AccountRequest;
 
 /**
  * This is the Controller class for Account mService
@@ -45,6 +46,29 @@ public class AccountResourceImpl implements AccountResource {
 		ResourceCollection<Account> resource = new ResourceCollection<>(accounts);
 		return Response.ok(resource).links(link).build();
 	}	
+	
+	@Override
+	public Response findAccountId(String accountId) {
+		if(accountId == null) {
+			return Response.noContent().build();
+		}
+		Account account = accountService.findById(new Long(accountId));		
+		if (account == null) {
+			return Response.noContent().build();
+		}		
+		return Response.ok(account).build();
+	}
+	
+	@Override
+	public Response createAccount(AccountRequest acr) {
+		Account act = new Account(new Long(acr.getId()), acr.getName());
+		accountService.saveAccount(act);		
+		return Response.ok().build();
+	}
+	
+	
+	
+	
 	
 
 	

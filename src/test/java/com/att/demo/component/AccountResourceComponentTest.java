@@ -46,4 +46,24 @@ public class AccountResourceComponentTest {
 				.then()
 					.statusCode(200);
 	}
+	
+	@Test
+	public void testfindAllAccountId_success() {
+		
+		givenBaseSpec()
+				.when()
+				.get(uri)
+				.then()
+					.statusCode(200);
+	}
+	
+	@Test
+	public void createAccount_success() {
+		
+		givenBaseSpec()
+				.when()
+				.get(uri)
+				.then()
+					.statusCode(200);
+	}
 }
