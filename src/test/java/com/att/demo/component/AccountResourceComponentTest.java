@@ -1,5 +1,10 @@
 package com.att.demo.component;
 
+import io.restassured.RestAssured;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.http.ContentType;
+import io.restassured.specification.RequestSpecification;
+
 import java.net.InetAddress;
 
 import org.junit.Before;
@@ -9,12 +14,6 @@ import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import com.att.demo.model.Account;
-
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
-import io.restassured.specification.RequestSpecification;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")
@@ -39,11 +38,62 @@ public class AccountResourceComponentTest {
 	
 	@Test
 	public void testfindAllAccount_success() {
-		
+
 		givenBaseSpec()
 				.when()
 				.get(uri)
 				.then()
 					.statusCode(200);
+	
+	}
+	
+	@Test
+	public void testgetAccount_success() {
+		
+		givenBaseSpec()
+				.when()
+				.get(uri+"/1")
+				.then()
+					.statusCode(200);
+	
+	}
+	
+	@Test
+	public void testgetAccount_fail() {
+		
+		givenBaseSpec()
+				.when()
+				.get(uri+"/1122")
+				.then()
+					.statusCode(404);
+	
+	}
+
+	private RequestSpecification getSpec() {
+		String input = "{\"id\":\"\",\"name\":\"Account9\"}";
+		RequestSpecBuilder builder = new RequestSpecBuilder();
+		builder.setBody(input);
+		builder.setContentType("application/json; charset=UTF-8");
+		return builder.build();
+	}
+
+	@Test
+	public void testcreateAccount_success() {
+		
+		givenBaseSpec()
+				.when().spec(getSpec())
+				.post(uri)
+				.then()
+					.statusCode(201);
+	}
+	
+	@Test
+	public void testcreateAccount_fail() {
+		
+		givenBaseSpec()
+				.when().spec(getSpec())
+				.post(uri)
+				.then()
+					.statusCode(409);
 	}
 }
