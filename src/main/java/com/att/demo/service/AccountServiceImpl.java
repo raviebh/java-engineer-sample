@@ -44,6 +44,15 @@ public class AccountServiceImpl implements AccountService{
 		return null;
 	}
 	
+	public Account findById(String id) {
+		for(Account account : accounts){
+			if(Long.toString(account.getId()).equalsIgnoreCase(id)){
+				return account;
+			}
+		}
+		return null;
+	}
+	
 	public void saveAccount(Account account) {
 		counter.incrementAndGet();
 		accounts.add(account);
