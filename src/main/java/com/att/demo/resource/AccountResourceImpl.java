@@ -53,7 +53,7 @@ public class AccountResourceImpl implements AccountResource {
 	{
 		Account account = accountService.findById(id);	
 		if (account == null) {
-			return Response.noContent().build();
+			return Response.status(404).entity(new CustomError("Account with id "+id+"not found","404")).build();
 		}		
 		Link link = Link.fromUri(baseUrl).rel("self").build();		
 		Resource<Account> resource = new Resource<>(account);
@@ -65,7 +65,7 @@ public class AccountResourceImpl implements AccountResource {
 		Account existingAccount = accountService.findByName(account.getName());
 		if(null!=existingAccount)
 		{
-			//TODOUnable to create. A Account with name already exist" / error code 409(CONFLICTED) 
+			return Response.status(409).entity(new CustomError("A Account with name already exist","409")).build();
 		}
 		
 		Account newaccount = accountService.saveAccount(account);
