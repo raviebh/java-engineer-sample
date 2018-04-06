@@ -85,7 +85,7 @@ public class JerseyConfiguration extends ResourceConfig {
 	    config.setConfigId("springboot-demo");
 	    config.setTitle("Swagger docs for Demo application");
 	    config.setVersion("v1");
-	    config.setContact("Abhishek Vishnoi");
+	    config.setContact("Ravi Bhusarapu");
 	    config.setSchemes(new String[] { "http", "https" });
 	    config.setBasePath(this.apiPath);
 	    config.setResourcePackage("com.att.demo.resource");

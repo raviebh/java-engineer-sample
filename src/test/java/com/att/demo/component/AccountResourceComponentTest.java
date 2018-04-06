@@ -46,48 +46,4 @@ public class AccountResourceComponentTest {
 				.then()
 					.statusCode(200);
 	}
-	
-	/*@Test
-	public void testCreateAccount_success() {
-		
-			
-		Account account = new Account();
-		account.setId(54321);
-		account.setName("test-create");
-		
-		givenBaseSpec()
-			.body(account)
-			.when()
-				.post(uri)
-				.then()
-					.statusCode(201);
-	}
-	
-	@Test
-	public void testCreateUser_failure() {
-		//TO-DO	
-	}
-	
-	@Test
-	public void testGetAccount_success() {
-		
-		Account account = new Account();
-		account.setId(12345);
-		account.setName("test-get");
-		
-		givenBaseSpec()
-			.body(account)
-			.when()
-				.post(uri)
-				.then()
-				.statusCode(201);
-
-		givenBaseSpec()
-		.when()
-			.get(uri + "/12345")
-			.then()
-				.statusCode(200);
-	}*/
-	
-	
 }
