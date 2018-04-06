@@ -17,4 +17,8 @@ public interface AccountService {
 	
 	boolean isAccountExist(Account account);
 	
+	Account getAccount(Long accountId);
+
+	Account getAccount(long accountId);
+	
 }

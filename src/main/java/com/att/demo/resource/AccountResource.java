@@ -48,9 +48,16 @@ public interface AccountResource {
 	@ApiResponses(
 			value = {
 					@ApiResponse(code = 200, message = "OK"),
-					@ApiResponse(code = 204, message = "No Content")					
+					@ApiResponse(code = 204, message = "No Content"),
+					@ApiResponse(code = 404, message = "NOT_FOUND"),
+					@ApiResponse(code = 409, message = "CONFLICTED")
 					})
 	public Response findAllAccounts();
+	
+	public Response getAccount(Account account);
+
+	public Response createAccount(Account account);
+
 	
 
 	
