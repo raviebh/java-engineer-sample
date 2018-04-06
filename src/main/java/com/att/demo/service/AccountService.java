@@ -13,6 +13,10 @@ public interface AccountService {
 	
 	void saveAccount(Account account);
 	
+	Account getAccount(long id);
+	
+	String createAccount(Account account);
+	
 	List<Account> findAllAccounts();
 	
 	boolean isAccountExist(Account account);
