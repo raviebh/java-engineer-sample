@@ -7,10 +7,13 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.att.demo.model.Account;
 import com.att.demo.model.swagger.AccountResponse;
@@ -52,6 +55,33 @@ public interface AccountResource {
 					})
 	public Response findAllAccounts();
 	
+	@GET
+	@Path("{id}")
+	@Produces({MediaType.APPLICATION_JSON})
+	@ApiOperation(
+			value = "Get Account Resource",
+			notes = "Returns the particular account depending on the id supplied",
+			response = AccountResponse.class)
+	@ApiResponses(
+			value = {
+					@ApiResponse(code = 200, message = "OK"),
+					@ApiResponse(code = 404, message = "Account with id not found")					
+					})
+	public Response getAccount(@PathParam(value="id") long id);
 
+	@POST
+	@Path("createAccount")
+	@Produces({MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_JSON})
+	@ApiOperation(
+			value = "Create Account Resource",
+			notes = "Created the particular account depending on the input supplied",
+			response = AccountResponse.class)
+	@ApiResponses(
+			value = {
+					@ApiResponse(code = 200, message = "OK"),
+					@ApiResponse(code = 409, message = "Account already exists with that name")					
+					})
+	public Response createAccount(String name);
 	
 }

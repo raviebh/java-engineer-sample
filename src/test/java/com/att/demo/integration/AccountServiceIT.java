@@ -12,6 +12,7 @@ import io.restassured.specification.RequestSpecification;
 public class AccountServiceIT {
 	
 	private String uri ="/accounts";
+
 		
 	@Before
 	public void setUp() throws Exception {
