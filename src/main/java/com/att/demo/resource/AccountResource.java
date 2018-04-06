@@ -52,6 +52,39 @@ public interface AccountResource {
 					})
 	public Response findAllAccounts();
 	
+	
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_JSON})
+	@ApiOperation(
+			value = "Add Account Resource",
+			notes = "Add the given account entity in ResourceCollection representation format",
+			response = AccountResponse.class)
+	@ApiResponses(
+			value = {
+					@ApiResponse(code = 200, message = "OK"),
+					@ApiResponse(code = 201, message = "Success"),
+					@ApiResponse(code = 409, message = "Unable to create. A Account with name already exist")					
+					})
+	public Response createAccount(Account account);
+	
+	
+	@Path("/accounts/{accountId}")
+	@GET
+	@Produces({MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_JSON})
+	@ApiOperation(
+			value = "Get Account Resource",
+			notes = "Returns all the accounts in ResourceCollection representation format",
+			response = AccountResponse.class)
+	@ApiResponses(
+			value = {
+					@ApiResponse(code = 200, message = "OK"),
+					@ApiResponse(code = 404, message = "Account not found")					
+					})
+	public Response getAccount(@PathParam(value = "accountId") long accountId);
+
+
 
 	
 }
