@@ -24,6 +24,8 @@ public class AccountResourceComponentTest {
 	protected int randomServerPort;
 	
 	private String uri ="/accounts";
+	private String fetchUri = "/accounts/123";
+	private String createUri = "/accounts/create";
 	
 	@Before
 	public void setUp() throws Exception {
@@ -45,5 +47,23 @@ public class AccountResourceComponentTest {
 				.get(uri)
 				.then()
 					.statusCode(200);
+	}
+	
+	@Test
+	public void testGetAccount_success() {		
+		givenBaseSpec()
+				.when()
+				.get(fetchUri)
+				.then()
+					.statusCode(200);
+	}
+	
+	@Test
+	public void testCreateAccount_success() {		
+		givenBaseSpec()
+				.when()
+				.get(createUri)
+				.then()
+					.statusCode(201);
 	}
 }
