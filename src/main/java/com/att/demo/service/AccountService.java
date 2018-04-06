@@ -11,7 +11,7 @@ public interface AccountService {
 	
 	Account findByName(String name);
 	
-	void saveAccount(Account account);
+	Account saveAccount(Account account);
 	
 	List<Account> findAllAccounts();
 	

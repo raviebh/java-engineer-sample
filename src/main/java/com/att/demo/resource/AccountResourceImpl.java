@@ -44,8 +44,38 @@ public class AccountResourceImpl implements AccountResource {
 		Link link = Link.fromUri(baseUrl).rel("self").build();		
 		ResourceCollection<Account> resource = new ResourceCollection<>(accounts);
 		return Response.ok(resource).links(link).build();
-	}	
+	}
 	
+	/***
+	 * Get Account
+	 */
+	public Response getAccount(long id)
+	{
+		Account account = accountService.findById(id);	
+		if (account == null) {
+			return Response.status(404).entity(new CustomError("Account with id "+id+"not found","404")).build();
+		}		
+		Link link = Link.fromUri(baseUrl).rel("self").build();		
+		Resource<Account> resource = new Resource<>(account);
+		return Response.ok(resource).links(link).build();
+	}
+
+	public Response createAccount(Account account) {
+		
+		Account existingAccount = accountService.findByName(account.getName());
+		if(null!=existingAccount)
+		{
+			return Response.status(409).entity(new CustomError("A Account with name already exist","409")).build();
+		}
+		
+		Account newaccount = accountService.saveAccount(account);
+		if (newaccount == null) {
+			return Response.noContent().build();//TODO  {"errorMessage": "Account with id 123 not found", "errorCode": "NOT_FOUND" }
+		}		
+		Link link = Link.fromUri(baseUrl).rel("self").build();		
+		Resource<Account> resource = new Resource<>(newaccount);
+		return Response.ok(resource).links(link).build();
+	}
 
 	
 

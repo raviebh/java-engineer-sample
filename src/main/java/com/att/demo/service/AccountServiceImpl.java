@@ -44,9 +44,10 @@ public class AccountServiceImpl implements AccountService{
 		return null;
 	}
 	
-	public void saveAccount(Account account) {
+	public Account saveAccount(Account account) {
 		counter.incrementAndGet();
 		accounts.add(account);
+		return account;
 	}
 
 	public void updateAccount(Account account) {
