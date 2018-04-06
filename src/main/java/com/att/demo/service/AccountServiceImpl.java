@@ -1,12 +1,14 @@
 package com.att.demo.service;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.att.demo.exception.CustomError;
 import com.att.demo.model.Account;
 
 
@@ -17,6 +19,8 @@ public class AccountServiceImpl implements AccountService{
 	private static final AtomicLong counter = new AtomicLong();
 	
 	private static List<Account> accounts;
+	
+	public static final Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);
 	
 	static{
 		accounts= populateDummyAccounts();
@@ -67,4 +71,42 @@ public class AccountServiceImpl implements AccountService{
 		return accounts;
 	}
 
+	@Override
+	public Account getAccount(long accountId) {
+		// TODO Auto-generated method stub
+		for(Account account : accounts){
+			if(account.getId() == accountId){
+				return account;
+			}
+			else {
+				CustomError error = new CustomError("Account with id"+accountId +"not found", "NOT_FOUND");
+				logger.error(error.getErrorCode());
+				logger.error(error.getErrorMessage());
+			}
+		}
+		return null;
+	}
+	
+public Account createAccount(Account account)  {
+	if(isAccountExist(account))
+	{
+		CustomError error = new CustomError("Unable to create. A Account with name"+ account.getName() +"already exist", "409");
+		logger.error(error.getErrorCode());
+		logger.error(error.getErrorMessage());
+	}
+	else {
+		updateAccount(account);
+	}
+	
+	return account;
+		
+	}
+
+@Override
+public Account getAccount(Long accountId) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+	
 }
