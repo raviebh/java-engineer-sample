@@ -54,6 +54,25 @@ public class AccountServiceImpl implements AccountService{
 		accounts.set(index, account);
 	}
 
+	public Account getAccount(long accountId) {
+		for(Account account : accounts){
+			if(account.getId() == accountId){
+				return account;
+			}
+		}
+
+		return new Account(accountId, "404 - Account not found");
+	}
+	
+	public String createAccount(Account account) {
+		if(isAccountExist(account)) {
+			return "409 (Conflicted) - Unable to create. An account with same name already exist";
+		}
+		counter.incrementAndGet();
+		accounts.add(account);
+		
+		return ("201 (Success) - Accound added");
+	}
 	
 	public boolean isAccountExist(Account account) {
 		return findByName(account.getName())!=null;
