@@ -52,6 +52,36 @@ public interface AccountResource {
 					})
 	public Response findAllAccounts();
 	
-
+	
+	@GET
+	@Produces({MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Path("/{id}")
+	@ApiOperation(
+			value = "Get Account Resource",
+			notes = "Returns the account in Resource<> representation format",
+			response = AccountResponse.class)
+	@ApiResponses(
+			value = {
+					@ApiResponse(code = 200, message = "Success"),
+					@ApiResponse(code = 404, message = "{\"errorMessage\": \"Account with id {id} not found\",  \"404\": \"NOT_FOUND\" }")					
+					})
+	public Response getAccount(String id);
+	
+	
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Path("/create/")
+	@ApiOperation(
+			value = "Create an Account Resource",
+			notes = "Adds the Account in the static list",
+			response = AccountResponse.class)
+	@ApiResponses(
+			value = {
+					@ApiResponse(code = 201, message = "Success"),
+					@ApiResponse(code = 409, message = "Unable to create. The Account <name>  already exists!")					
+					})
+	public Response createAccount(String id, String name);
 	
 }

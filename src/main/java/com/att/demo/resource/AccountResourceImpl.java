@@ -46,7 +46,29 @@ public class AccountResourceImpl implements AccountResource {
 		return Response.ok(resource).links(link).build();
 	}	
 	
-
+	@Override
+	public Response getAccount(String id) {
+		Account account = accountService.findById(Long.parseLong(id));
+		if (account == null) {
+			return Response.noContent().build();
+		}
+		Link link = Link.fromUri(baseUrl).rel("self").build();		
+		Resource<Account> resource = new Resource<Account>(account);
+		return Response.ok(resource).links(link).build();
+	}
 	
-
+	@Override
+	public Response createAccount(String id, String name) {
+		Account account = new Account();
+		account.setId(Long.parseLong(id));
+		account.setName(name);
+		try {
+			accountService.saveAccount(account);
+		} catch(Exception e) { 
+			return Response.noContent().build();
+		}
+		Link link = Link.fromUri(baseUrl).rel("self").build();
+		Resource<Account> resource = new Resource<Account>(account);
+		return Response.ok(resource).links(link).build();
+	}
 }
