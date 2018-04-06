@@ -2,6 +2,10 @@ package com.att.demo.resource;
 
 import java.util.List;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
@@ -46,7 +50,37 @@ public class AccountResourceImpl implements AccountResource {
 		return Response.ok(resource).links(link).build();
 	}	
 	
-
-	
+	@Override
+	public Response getAccount(@PathParam("id")long id) {
+		Account account = accountService.findById(id);
+		
+		if(account==null) {
+			
+			String errorMessage = "Account with id" + id + " can't be found";
+			String errrorCode= Response.Status.NOT_FOUND.name();
+			CustomError error= new CustomError(errorMessage, errrorCode);
+			
+			return Response.status(Response.Status.NOT_FOUND)
+					.entity(error).build();
+		}
+		Link link = Link.fromUri(baseUrl+"/{id}").rel("self").build();		
+		Resource<Account> resource = new Resource<Account>(account);
+		return Response.ok(resource).links(link).build();
+	}
+    
+	@Override
+    public Response createAccount (Account account) {
+    	if(account==null||account.getName()==null) {
+    		return Response.status(Response.Status.BAD_REQUEST)
+    				.entity("Account or Account name is null").build();
+    	}
+    	if(accountService.findByName(account.getName())!=null) {
+    		return Response.status(Response.Status.CONFLICT)
+					.entity("Unable to create an Account with name "+account.getName()+" already exists").build();
+    	}
+    	accountService.saveAccount(account);
+    	Link link = Link.fromUri(baseUrl).rel("self").build();
+    	return Response.status(Response.Status.CREATED).links(link).build();
+    }
 
 }

@@ -52,6 +52,34 @@ public interface AccountResource {
 					})
 	public Response findAllAccounts();
 	
-
+	    @GET
+	    @Produces({MediaType.APPLICATION_JSON})
+		@Consumes({MediaType.APPLICATION_JSON})
+	    @Path("/{id}")
+	    @ApiOperation(
+				value = "Gets a single account by ID",
+				notes = "Returns one Account in Resource representation format",
+				response = AccountResponse.class)
+		@ApiResponses(
+				value = {
+						@ApiResponse(code = 200, message = "OK"),
+						@ApiResponse(code = 404, message = "Not found")					
+						})
+		public Response getAccount(@PathParam("id")long id);
+	    
+	    @POST
+	    @Produces({MediaType.APPLICATION_JSON})
+		@Consumes({MediaType.APPLICATION_JSON})
+	    @ApiOperation(
+				value = "Inserts an account onto the collection",
+				notes = "adds the account"
+			    )
+		@ApiResponses(
+				value = {
+						@ApiResponse(code = 201, message = "CREATED"),
+						@ApiResponse(code = 409, message = "CONFLICT"),
+						@ApiResponse(code = 400, message = "BAD_REQUEST")	
+						})
+	    public Response createAccount (Account account);
 	
 }
