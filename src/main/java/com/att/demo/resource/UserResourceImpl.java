@@ -10,6 +10,7 @@ import javax.ws.rs.core.Response.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.att.demo.exception.CustomError;
 import com.att.demo.model.User;
 import com.att.demo.model.representation.Resource;
 import com.att.demo.model.representation.ResourceCollection;
@@ -39,7 +40,8 @@ public class UserResourceImpl implements UserResource {
 	public Response getUserById(long id) {
 		User user = userService.findById(id);
 		if (user == null) {
-			return Response.status(Response.Status.NOT_FOUND).entity("Unable to find an user with id " + id).build();
+			CustomError cError = new CustomError("User does not exist for id "+id+ "", "NOT_FOUND");
+			return Response.status(Response.Status.NOT_FOUND).entity(cError).build();
 		}
 		Link link = Link.fromUri(baseUrl).rel("self").build();
 		Resource<User> resource = new Resource<>(user);

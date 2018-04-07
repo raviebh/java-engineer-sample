@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.att.demo.exception.CustomError;
 import com.att.demo.model.Account;
 import com.att.demo.model.representation.Resource;
 import com.att.demo.model.representation.ResourceCollection;
@@ -49,7 +50,8 @@ public class AccountResourceImpl implements AccountResource {
 	public Response getAccount(long id) {
 		Account account = accountService.findById(id);
 		if (account == null) {
-			return Response.status(Response.Status.NOT_FOUND).entity("Unable to find an account with id " + id).build();
+			CustomError cError = new CustomError("An account with id "+id+" does not exist", "NOT_FOUND");
+			return Response.status(Response.Status.NOT_FOUND).entity(cError).build();
 		}
 		Link link = Link.fromUri(baseUrl).rel("self").build();
 		Resource<Account> resource = new Resource<>(account);
