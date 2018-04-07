@@ -2,6 +2,7 @@ package com.att.demo.resource;
 
 import java.util.List;
 
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
@@ -46,7 +47,35 @@ public class AccountResourceImpl implements AccountResource {
 		return Response.ok(resource).links(link).build();
 	}	
 	
-
 	
+	@Override
+	public Response getAccount(@PathParam("id") Long id) {
+		Account account = accountService.findById(id);			
+				
+			if(account.getId()==id){
+				return Response.status(200).entity(account).build();		
+			}else{
+				CustomError error = new CustomError("Account with id "+id+" not found","NOT_FOUND");
+				return Response.status(404).entity(error).build();	
+			}
+	}
 
+
+	@Override
+	public Response createAccount(Account a) {	
+		
+		if(!accountService.isAccountExist(a)){
+			System.out.println("Account does not exit, so adding the account" + a);
+			accountService.saveAccount(a);
+			return Response.status(201).entity(a).build();		
+			
+		}else{
+
+			System.out.println("Account already exit" + a);
+			return Response.status(404).entity("Unable to create. A Account with name already exist").build();	
+			
+		}
+		
+}	
+	
 }
