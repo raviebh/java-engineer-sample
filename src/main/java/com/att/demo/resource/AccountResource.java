@@ -52,6 +52,46 @@ public interface AccountResource {
 					})
 	public Response findAllAccounts();
 	
+	/**
+     * Service definition which returns account being searched
+     *
+     * 
+     * @return User - Returns the details of the account being searched
+     */
+	@GET
+	@Produces({MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_JSON})
+	@ApiOperation(
+			value = "Create Account Resource",
+			notes = "Creates account in Resource representation format",
+			response = AccountResponse.class)
+	@ApiResponses(
+			value = {
+					@ApiResponse(code = 200, message = "OK"),
+					@ApiResponse(code = 204, message = "No Content")					
+					})
+	@Path("{name}")
+	public Response getAccount(@PathParam("name") String name);
+	
+	/**
+     * Service definition which creates new Account
+     *
+     * 
+     * @return User - Returns the details of the account being searched
+     */
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_JSON})
+	@ApiOperation(
+			value = "Created Account Resource",
+			notes = "Returns searched account in ResourceCollection representation format",
+			response = AccountResponse.class)
+	@ApiResponses(
+			value = {
+					@ApiResponse(code = 201, message = "OK"),
+					@ApiResponse(code = 409, message = "Conflicted")
+					})
+	public Response createAccount(Account account);
 
 	
 }
