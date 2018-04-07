@@ -8,6 +8,7 @@ import com.att.demo.model.Account;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
+import io.restassured.builder.RequestSpecBuilder;
 
 public class AccountServiceIT {
 	
@@ -35,4 +36,53 @@ public class AccountServiceIT {
 				.then()
 					.statusCode(200);
 	}
+	
+	@Test
+	public void testgetAccount_success() {
+		
+		givenBaseSpec()
+				.when()
+				.get(uri+"/1")
+				.then()
+					.statusCode(200);
+	}
+	
+	@Test
+	public void testgetAccount_fail() {
+		
+		givenBaseSpec()
+				.when()
+				.get(uri+"/12345")
+				.then()
+					.statusCode(404);
+	}
+	
+	private RequestSpecification getSpec() {
+		String input = "{\"id\":\"\",\"name\":\"Account9\"}";
+		RequestSpecBuilder builder = new RequestSpecBuilder();
+		builder.setBody(input);
+		builder.setContentType("application/json; charset=UTF-8");
+		return builder.build();
+	}
+
+	@Test
+	public void testcreateAccount_success() {
+		
+		givenBaseSpec()
+				.when().spec(getSpec())
+				.post(uri)
+				.then()
+					.statusCode(201);
+	}
+	
+	@Test
+	public void testcreateAccount_fail() {
+		
+		givenBaseSpec()
+				.when().spec(getSpec())
+				.post(uri)
+				.then()
+					.statusCode(409);
+	}
+
 }
