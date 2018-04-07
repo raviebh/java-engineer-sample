@@ -2,25 +2,17 @@ package com.att.demo.resource;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
-
-import org.springframework.web.bind.annotation.RequestBody;
-
 import com.att.demo.model.Account;
 import com.att.demo.model.swagger.AccountResponse;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
@@ -65,7 +57,7 @@ public interface AccountResource {
 	@ApiResponses(
 			value = {
 					@ApiResponse(code = 200, message = "OK"),
-					@ApiResponse(code = 404, message = "Account with id not found")					
+					@ApiResponse(code = 404, message = "Account with id <id> not found")					
 					})
 	public Response getAccount(@PathParam(value="id") long id);
 
@@ -80,8 +72,8 @@ public interface AccountResource {
 	@ApiResponses(
 			value = {
 					@ApiResponse(code = 200, message = "OK"),
-					@ApiResponse(code = 409, message = "Account already exists with that name")					
+					@ApiResponse(code = 409, message = "Account already exists with <name> name")					
 					})
-	public Response createAccount(String name);
+	public Response createAccount(Account account);
 	
 }

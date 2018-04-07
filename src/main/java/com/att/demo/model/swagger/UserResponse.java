@@ -7,7 +7,6 @@ import com.att.demo.model.User;
 import com.att.demo.model.representation.Resource;
 
 /**
- * @author vinodbottu
  *
  */
 public class UserResponse extends Resource<User> {

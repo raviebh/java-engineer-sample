@@ -29,7 +29,6 @@ public class Links implements Serializable{
 		return self;
 	}
 
-	@SuppressWarnings("unused")
 	private void setSelf(String self) {
 		this.self = self;
 	}	
