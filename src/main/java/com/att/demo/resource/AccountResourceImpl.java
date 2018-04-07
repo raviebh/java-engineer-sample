@@ -45,26 +45,29 @@ public class AccountResourceImpl implements AccountResource {
 		Link link = Link.fromUri(baseUrl).rel("self").build();		
 		ResourceCollection<Account> resource = new ResourceCollection<>(accounts);
 		return Response.ok(resource).links(link).build();
-	}	
-	
+	}
+
 	@Override
-	public Response findAccountId(String accountId) {
-		if(accountId == null) {
-			return Response.noContent().build();
-		}
+	public Response findAccountBasedOnId(String accountId) {
 		Account account = accountService.findById(new Long(accountId));		
 		if (account == null) {
-			return Response.noContent().build();
+			 return Response.status(Response.Status.NOT_FOUND).entity("Account with that id "+accountId+" not found: ").build();
 		}		
-		return Response.ok(account).build();
-	}
+		Link link = Link.fromUri(baseUrl).rel("self").build();		
+		Resource<Account> resource = new Resource<Account>(account);
+		return Response.ok(resource).links(link).build();
+	}	
 	
-	@Override
-	public Response createAccount(AccountRequest acr) {
-		Account act = new Account(new Long(acr.getId()), acr.getName());
-		accountService.saveAccount(act);		
-		return Response.ok().build();
-	}
+	@Override	
+	public Response createAccount(Account account) {
+		if (accountService.isAccountExist(account)) {
+			 return Response.status(Response.Status.CONFLICT).entity("Unable to create an account. An Account "+account.getName()+"  already exist").build();
+		}	
+		accountService.saveAccount(account);
+		Link link = Link.fromUri(baseUrl).rel("self").build();		
+		Resource<Account> resource = new Resource<Account>(accountService.findByName(account.getName()));
+		return Response.status(201).entity(resource).build();
+	}	
 	
 	
 	

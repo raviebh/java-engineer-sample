@@ -56,10 +56,9 @@ public interface AccountResource {
      * 
      * @return User - Returns the details of the accounts being searched
      */
-	@RequestMapping(value = "",
-            method = RequestMethod.GET,
-            produces = {"application/json"})
-	@ResponseStatus(HttpStatus.OK)
+	@GET
+	@Produces({MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_JSON})
 	@ApiOperation(
 			value = "Get Account Resource",
 			notes = "Returns all the accounts in ResourceCollection representation format",
@@ -69,43 +68,37 @@ public interface AccountResource {
 					@ApiResponse(code = 200, message = "OK"),
 					@ApiResponse(code = 204, message = "No Content")					
 					})
-	@ResponseBody
 	public Response findAllAccounts();
 	
 	
 
-	@RequestMapping(value = "/{id}",
-	            method = RequestMethod.GET,
-	            produces = {"application/json"})
-    @ResponseStatus(HttpStatus.OK)
-	@ResponseBody
+	@GET
+	@Produces({MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_JSON})
 	@ApiOperation(
-			value = "Get a specific Account Resource",
-			notes = "Returns a specific accounts in ResourceCollection representation format",
+			value = "Get Specific Account Resource",
+			notes = "Returns the Account for a given accountId in ResourceCollection representation format",
 			response = AccountResponse.class)
 	@ApiResponses(
 			value = {
 					@ApiResponse(code = 200, message = "OK"),
-					@ApiResponse(code = 204, message = "No Content")					
+					@ApiResponse(code = 404, message = "NOT_FOUND")
 					})
-	public Response findAccountId(@PathVariable String id);
+	@Path("{accountId}")
+	public Response findAccountBasedOnId(@PathParam(value = "accountId") String id);
 	
-	@RequestMapping(value = "",
-				method = RequestMethod.POST,
-				consumes = {"application/json"},
-				produces = {"application/json"})
-    @ResponseStatus(HttpStatus.OK)
-	@ResponseBody
+	@POST
+	@Consumes({MediaType.APPLICATION_JSON})
 	@ApiOperation(
-			value = "Get a specific Account Resource",
-			notes = "Returns a specific accounts in ResourceCollection representation format",
+			value = "Create Account Resource",
+			notes = "Creates an account resource with given accountId, returns 201 if unsuccessful",
 			response = AccountResponse.class)
 	@ApiResponses(
 			value = {
 					@ApiResponse(code = 200, message = "OK"),
-					@ApiResponse(code = 204, message = "No Content")					
-	})
-    public Response createAccount(@RequestBody AccountRequest account);
+					@ApiResponse(code = 404, message = "NOT_FOUND")
+					})
+    public Response createAccount(Account account);
 	
 	
 }
