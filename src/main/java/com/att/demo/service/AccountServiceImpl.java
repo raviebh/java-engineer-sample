@@ -7,6 +7,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.stereotype.Service;
 
+import com.att.demo.exception.AccountNotFoundException;
 import com.att.demo.model.Account;
 
 
@@ -26,13 +27,14 @@ public class AccountServiceImpl implements AccountService{
 		return accounts;
 	}
 	
-	public Account findById(long id) {
+	public Account findById(long id) throws Exception {
 		for(Account account : accounts){
+			System.out.println("accounts:" + accounts);
 			if(account.getId() == id){
 				return account;
 			}
 		}
-		return null;
+		throw new AccountNotFoundException("404", "Account with id" + id + "not found");
 	}
 	
 	public Account findByName(String name) {
