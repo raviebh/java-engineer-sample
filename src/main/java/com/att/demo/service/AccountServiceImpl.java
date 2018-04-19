@@ -46,6 +46,7 @@ public class AccountServiceImpl implements AccountService{
 	
 	public void saveAccount(Account account) {
 		counter.incrementAndGet();
+		account.setId(counter.get());
 		accounts.add(account);
 	}
 
