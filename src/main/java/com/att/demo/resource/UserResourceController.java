@@ -23,8 +23,8 @@ public class UserResourceController {
 	@ApiOperation(value = "Add a User")
 	@ApiResponses(
 			value = {
-					@ApiResponse(code = 200, message = ""),
-					@ApiResponse(code = 204, message = ""),
+					@ApiResponse(code = 200, message = "Succesful Addition of User"),
+					@ApiResponse(code = 204, message = "User information not found"),
 					@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
 					@ApiResponse(code = 404, message = "The resource you were trying to reach is not found")	
 					})
