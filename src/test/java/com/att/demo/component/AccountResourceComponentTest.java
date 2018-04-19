@@ -57,4 +57,14 @@ public class AccountResourceComponentTest {
 					.statusCode(200);
 	}
 	
+	@Test
+	public void testfindAccount_NotFound() {
+		
+		givenBaseSpec()
+				.when()
+				.get(uri + "/4")
+				.then()
+					.statusCode(404);
+	}
+	
 }
