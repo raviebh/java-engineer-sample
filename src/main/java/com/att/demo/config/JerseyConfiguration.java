@@ -16,8 +16,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
+import com.att.demo.resource.AccountResourceController;
 import com.att.demo.resource.AccountResourceImpl;
+import com.att.demo.resource.UserResourceController;
 import com.att.demo.resource.UserResourceImpl;
+import com.att.demo.service.UserServiceImpl;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
@@ -67,6 +70,8 @@ public class JerseyConfiguration extends ResourceConfig {
 	@Autowired
     public JerseyConfiguration() {
 		register(AccountResourceImpl.class);	
+		register(UserResourceController.class);	
+		register(AccountResourceController.class);	
 		
     }
 	
