@@ -17,4 +17,6 @@ public interface AccountService {
 	
 	boolean isAccountExist(Account account);
 	
+	public Account createAccount(Account account);
+	
 }

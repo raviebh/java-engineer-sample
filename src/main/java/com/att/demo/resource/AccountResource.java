@@ -12,6 +12,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.att.demo.model.Account;
 import com.att.demo.model.swagger.AccountResponse;
 
@@ -53,5 +60,14 @@ public interface AccountResource {
 	public Response findAllAccounts();
 	
 
+	@GetMapping("/getaccount/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public ResponseEntity<Account> getAccount(@PathVariable int id);
+	
+	@GetMapping("/createaccount")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public ResponseEntity<Account> createAccount(@RequestBody Account acct );
 	
 }
