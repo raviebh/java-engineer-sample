@@ -5,7 +5,10 @@ public class CustomError {
     private String errorMessage;
     
     private String errorCode;
-
+   
+    public CustomError(String errorMessage){
+        this.errorMessage = errorMessage;
+    }
     public String getErrorCode() {
 		return errorCode;
 	}
