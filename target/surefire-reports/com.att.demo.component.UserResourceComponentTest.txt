@@ -1,0 +1,20 @@
+-------------------------------------------------------------------------------
+Test set: com.att.demo.component.UserResourceComponentTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 2.886 sec <<< FAILURE! - in com.att.demo.component.UserResourceComponentTest
+addUserTest(com.att.demo.component.UserResourceComponentTest)  Time elapsed: 0.109 sec  <<< FAILURE!
+java.lang.AssertionError: expected:<200> but was:<500>
+	at org.junit.Assert.fail(Assert.java:88)
+	at org.junit.Assert.failNotEquals(Assert.java:834)
+	at org.junit.Assert.assertEquals(Assert.java:645)
+	at org.junit.Assert.assertEquals(Assert.java:631)
+	at com.att.demo.component.UserResourceComponentTest.addUserTest(UserResourceComponentTest.java:66)
+
+findAllTest(com.att.demo.component.UserResourceComponentTest)  Time elapsed: 0.047 sec  <<< FAILURE!
+java.lang.AssertionError: expected:<200> but was:<405>
+	at org.junit.Assert.fail(Assert.java:88)
+	at org.junit.Assert.failNotEquals(Assert.java:834)
+	at org.junit.Assert.assertEquals(Assert.java:645)
+	at org.junit.Assert.assertEquals(Assert.java:631)
+	at com.att.demo.component.UserResourceComponentTest.findAllTest(UserResourceComponentTest.java:50)
+

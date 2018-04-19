@@ -66,5 +66,17 @@ public class AccountServiceImpl implements AccountService{
 		accounts.add(new Account(counter.incrementAndGet(),"Account3"));
 		return accounts;
 	}
+	
+	public Account createAccount(Account account) {
+		counter.incrementAndGet();
+		
+		for(Account acct:accounts) {
+			if(acct.getId()==account.getId()) {
+				return null;
+			}
+		}
+		 accounts.add(account);
+		 return account;
+	}
 
 }
