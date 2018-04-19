@@ -9,6 +9,8 @@ import io.swagger.annotations.ApiModelProperty;
 description = "An User domain object")
 public class User implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+
 	private long id;
 	
 	private String name;
@@ -16,8 +18,6 @@ public class User implements Serializable{
 	private int age;
 	
 	private int accountId;
-	
-	
 
 	public User(long id, String name, int age, int accountId) {
 		super();
@@ -82,7 +82,4 @@ public class User implements Serializable{
 	public void setAccountId(int accountId) {
 		this.accountId = accountId;
 	}
-	
-	
-
 }
