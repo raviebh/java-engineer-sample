@@ -67,6 +67,8 @@ public class JerseyConfiguration extends ResourceConfig {
 	@Autowired
     public JerseyConfiguration() {
 		register(AccountResourceImpl.class);	
+		register(UserResourceImpl.class);	
+		
 		
     }
 	

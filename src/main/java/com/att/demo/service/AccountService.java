@@ -3,6 +3,7 @@ package com.att.demo.service;
 
 import java.util.List;
 
+import com.att.demo.exception.CustomError;
 import com.att.demo.model.Account;
 
 public interface AccountService {
@@ -16,5 +17,7 @@ public interface AccountService {
 	List<Account> findAllAccounts();
 	
 	boolean isAccountExist(Account account);
+
+	void validateAccount(Account account, List<CustomError> errorMessages);
 	
 }

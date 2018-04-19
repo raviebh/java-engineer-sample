@@ -7,7 +7,9 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.stereotype.Service;
 
+import com.att.demo.exception.CustomError;
 import com.att.demo.model.Account;
+import com.att.demo.model.User;
 
 
 
@@ -17,6 +19,22 @@ public class AccountServiceImpl implements AccountService{
 	private static final AtomicLong counter = new AtomicLong();
 	
 	private static List<Account> accounts;
+	
+	public static final String ERR_CODE_INVALID_ADD_REQUEST= "ERR3";
+	
+	public static final String ERR_MESSAGE_INVALID_ADD_REQUEST= "Invalid post body";
+		
+	public static final String ERR_CODE_MISSING_ID= "ERR4";
+		
+	public static final String ERR_MESSAGE_MISSING_ID= "Missing required value for account id";
+		
+	public static final String ERR_CODE_MISSING_ACCOUNT_ID = "ERR5";
+		
+	public static final String ERR_MESSAGE_MISSING_ACCOUNT_ID= "Missing required value for  account id";
+		
+	public static final String ERR_CODE_MISSING_NAME= "ERR6";
+		
+	public static final String ERR_MESSAGE_MISSING_NAME= "Missing reuired value for account name";
 	
 	static{
 		accounts= populateDummyAccounts();
@@ -66,5 +84,19 @@ public class AccountServiceImpl implements AccountService{
 		accounts.add(new Account(counter.incrementAndGet(),"Account3"));
 		return accounts;
 	}
+	
+	public void validateAccount(Account account, List<CustomError> errorMessages) {
+		if (account == null) {
+			errorMessages.add(new CustomError(ERR_MESSAGE_INVALID_ADD_REQUEST, ERR_CODE_INVALID_ADD_REQUEST));
+		} else {
+			if (account.getId() == 0L) {
+				errorMessages.add(new CustomError(ERR_MESSAGE_MISSING_ID, ERR_CODE_MISSING_ID));
+		
+			if (account.getName() == null) {
+				errorMessages.add(new CustomError(ERR_MESSAGE_MISSING_NAME, ERR_CODE_MISSING_NAME));
+			}
+		}
+	}
 
+}
 }

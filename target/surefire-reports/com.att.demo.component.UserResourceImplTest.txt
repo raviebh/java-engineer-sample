@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.att.demo.component.UserResourceImplTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.261 sec - in com.att.demo.component.UserResourceImplTest
