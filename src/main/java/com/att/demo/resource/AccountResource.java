@@ -12,6 +12,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.springframework.web.bind.annotation.RequestBody;
+
 import com.att.demo.model.Account;
 import com.att.demo.model.swagger.AccountResponse;
 
@@ -36,7 +38,7 @@ public interface AccountResource {
      * Service definition which returns all the accounts
      *
      * 
-     * @return User - Returns the details of the accounts being searched
+     * @return Account - Returns the details of the accounts being searched
      */
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
@@ -52,6 +54,40 @@ public interface AccountResource {
 					})
 	public Response findAllAccounts();
 	
-
+	/**
+     * Service definition which returns a Account
+     * @return Account - Returns the details of the Account
+     */
+	@GET
+	@Path("/{accountId}")
+	@Produces({MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_JSON})
+	@ApiOperation(
+			value = "Get Account Resource",
+			notes = "Returns Account representation format",
+			response = AccountResponse.class)
+	@ApiResponses(
+			value = {
+					@ApiResponse(code = 200, message = "OK"),
+					@ApiResponse(code = 404, message = "Account not found for the given Id")					
+					})
+	public Response getAccount(@PathParam("accountId") long id);
+	
+	   /**
+	  * Service definition which created the Account
+	  * @return User - Returns the details of the accounts being searched
+	  */
+		@POST
+		@Produces({MediaType.APPLICATION_JSON})
+		@Consumes({MediaType.APPLICATION_JSON})
+		@ApiOperation(
+				value = "Create Account Resource",
+				notes = "Posts account in Account representation format")
+		@ApiResponses(
+				value = {
+						@ApiResponse(code = 201, message = "OK"),
+						@ApiResponse(code = 409, message = "Unable to create. A Account with name already exist")					
+						})
+		public Response createAccount(@RequestBody Account account);
 	
 }
