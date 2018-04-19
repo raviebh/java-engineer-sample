@@ -2,6 +2,7 @@ package com.att.demo.component;
 
 import java.net.InetAddress;
 
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -65,6 +66,26 @@ public class AccountResourceComponentTest {
 				.get(uri + "/4")
 				.then()
 					.statusCode(404);
+	}
+	
+	@Test
+	public void testcreateAccount_Success() {
+		givenBaseSpec()
+				.body("{\"name\":\"Test User1\"}")
+				.when()
+				.post(uri)
+				.then()
+					.statusCode(201);
+	}
+	
+	@Test
+	public void testcreateAccount_failure() {
+		givenBaseSpec()
+				.body("{\"name\":\"Account1\"}")
+				.when()
+				.post(uri)
+				.then()
+					.statusCode(409);
 	}
 	
 }
