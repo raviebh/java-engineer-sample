@@ -16,5 +16,7 @@ public interface AccountService {
 	List<Account> findAllAccounts();
 	
 	boolean isAccountExist(Account account);
+	Account getAccount(String id);
+ Account createAccount(Account account);
 	
 }
