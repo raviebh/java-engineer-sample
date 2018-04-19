@@ -7,7 +7,7 @@ import com.att.demo.model.Account;
 
 public interface AccountService {
 	
-	Account findById(long id);
+	Account findById(long id) throws Exception;
 	
 	Account findByName(String name);
 	

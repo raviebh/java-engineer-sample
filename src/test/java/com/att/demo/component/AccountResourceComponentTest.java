@@ -46,4 +46,34 @@ public class AccountResourceComponentTest {
 				.then()
 					.statusCode(200);
 	}
+	
+	@Test
+	public void testfindAccountById_success() {
+		
+		givenBaseSpec()
+				.when()
+				.get("/account/1")
+				.then()
+					.statusCode(200);
+	}
+	
+	@Test
+	public void testfindAccountById_notFound() {
+		
+		givenBaseSpec()
+				.when()
+				.get("/account/100")
+				.then()
+					.statusCode(404);
+	}
+	
+	@Test
+	public void testfindAccountById_error() {
+		
+		givenBaseSpec()
+				.when()
+				.get("/account/null")
+				.then()
+					.statusCode(500);
+	}
 }

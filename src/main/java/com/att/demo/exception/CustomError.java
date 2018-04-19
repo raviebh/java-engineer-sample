@@ -13,6 +13,10 @@ public class CustomError {
 	public void setErrorCode(String errorCode) {
 		this.errorCode = errorCode;
 	}
+	
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
 
 	public CustomError(String errorMessage, String errorCode){
         this.errorMessage = errorMessage;
