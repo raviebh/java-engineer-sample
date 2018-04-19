@@ -46,4 +46,15 @@ public class AccountResourceComponentTest {
 				.then()
 					.statusCode(200);
 	}
+	
+	@Test
+	public void testfindAccount_success() {
+		
+		givenBaseSpec()
+				.when()
+				.get(uri + "/1")
+				.then()
+					.statusCode(200);
+	}
+	
 }
