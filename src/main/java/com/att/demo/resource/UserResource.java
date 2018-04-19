@@ -5,59 +5,54 @@ package com.att.demo.resource;
  * 
  * 
  */
-@Api("user")
-@Path("/users")
-public interface UserResource {
+@Controller
+public class UserResourceImpl implements UserResource {
 
-    @GET
-    @Produces({MediaType.APPLICATION_JSON})
-    @Consumes({MediaType.APPLICATION_JSON})
-    @ApiOperation(
-            value = "Get Account Resource",
-            notes = "Returns all the accounts in ResourceCollection representation format",
-            response = AccountResponse.class)
-    @ApiResponses(
-            value = {
-                    @ApiResponse(code = 200, message = "OK"),
-                    @ApiResponse(code = 204, message = "No Content")
-            })
-    public Response findAllUsers();
+    public static final Logger logger = LoggerFactory.getLogger(UserResourceImpl.class);
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    AccountService accountService;
+
+    private static String baseUrl = "/users";
 
 
-    @GET
-    @Produces({MediaType.APPLICATION_JSON})
-    @Consumes({MediaType.APPLICATION_JSON})
-    @ApiOperation(
-            value = "Get Account Resource",
-            notes = "Returns all the accounts in ResourceCollection representation format",
-            response = UserResponse.class)
-    @ApiResponses(
-            value = {
-                    @ApiResponse(code = 201, message = "OK"),
-                    @ApiResponse(code = 404, message = "No Content Found")
+    @Override
+    public Response findAllUsers() {
+        return null;
+    }
 
-            })
+    @Override
+    public Response getUser(Integer id) {
+        logger.info("**************** resource **************");
+        User user = userService.getUser(Long.valueOf(id));
+        List<User> userList = null;
+        if(user != null){
+            userList = new ArrayList<User>();
+            userList.add(user);
+            Link link = Link.fromUri(baseUrl).rel("self").build();
+            ResourceCollection<User> resource = new ResourceCollection<>(userList);
+            return Response.ok(resource).links(link).build();
+        } else {
+            return Response.noContent().build();
+        }
 
-    @Path(value = "/{id}")
-    public Response getUser(@PathParam("id")  Integer id);
+    }
 
+    @Override
+    public Response createUser(User user) {
+        logger.info("**************** resource **************");
+        /*Account account = accountService.findById(user.getAccountId());
+        if(account != null){
+            Account account1 = new Account();
+            account1.setId(user.getId(););
+            account1.setName(user.getName());
+            accountService.saveAccount(account1);
 
-    @POST
-    @Produces({MediaType.APPLICATION_JSON})
-    @Consumes({MediaType.APPLICATION_JSON})
-    @ApiOperation(
-            value = "Get Account Resource",
-            notes = "Returns all the accounts in ResourceCollection representation format",
-            response = UserResponse.class)
-    @ApiResponses(
-            value = {
-                    @ApiResponse(code = 200, message = "OK"),
-                    @ApiResponse(code = 409, message = "CONFLICTED")
-
-            })
-
-    public Response createUser(@RequestBody User user);
-	
-   
-	
+        }*/
+        userService.createUser(user);
+        return Response.noContent().build();
+    }
 }
