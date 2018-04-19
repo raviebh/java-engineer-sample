@@ -5,12 +5,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.att.demo.exception.AccountNotFoundException;
 import com.att.demo.model.Account;
-
-
 
 @Service("accountService")
 public class AccountServiceImpl implements AccountService{
@@ -18,6 +17,9 @@ public class AccountServiceImpl implements AccountService{
 	private static final AtomicLong counter = new AtomicLong();
 	
 	private static List<Account> accounts;
+	
+	@Value("${accountresource.retry.count}")
+	private int retryCount;
 	
 	static{
 		accounts= populateDummyAccounts();
@@ -28,11 +30,17 @@ public class AccountServiceImpl implements AccountService{
 	}
 	
 	public Account findById(long id) throws Exception {
+		int count=0;
 		for(Account account : accounts){
 			System.out.println("accounts:" + accounts);
 			if(account.getId() == id){
 				return account;
 			}
+		}
+		//Retry Mechanism
+		count++;
+		if(count<=retryCount) {
+			findById(id);
 		}
 		throw new AccountNotFoundException("404", "Account with id" + id + "not found");
 	}
