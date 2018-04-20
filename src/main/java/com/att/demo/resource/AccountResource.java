@@ -53,7 +53,6 @@ public interface AccountResource {
 	public Response findAllAccounts();
 	
 	@POST
-	@Path("/add")
 	@Produces({MediaType.APPLICATION_JSON})
 	@Consumes({MediaType.APPLICATION_JSON})
 	@ApiOperation(
@@ -71,7 +70,7 @@ public interface AccountResource {
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Consumes({MediaType.APPLICATION_JSON})
-	@Path("/get/{id}")
+	@Path("/{id}")
 	@ApiOperation(
 			value = "get Account Resource",
 			notes = "get the  account by id",
