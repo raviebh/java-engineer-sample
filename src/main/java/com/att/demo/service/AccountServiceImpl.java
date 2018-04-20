@@ -2,7 +2,10 @@ package com.att.demo.service;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.stereotype.Service;
@@ -59,6 +62,7 @@ public class AccountServiceImpl implements AccountService{
 		return findByName(account.getName())!=null;
 	}
 	
+	
 	private static List<Account> populateDummyAccounts(){
 		List<Account> accounts = new ArrayList<Account>();
 		accounts.add(new Account(counter.incrementAndGet(),"Account1"));
@@ -66,5 +70,36 @@ public class AccountServiceImpl implements AccountService{
 		accounts.add(new Account(counter.incrementAndGet(),"Account3"));
 		return accounts;
 	}
+	private static Map<String,Account> empMap = new LinkedHashMap<String,Account>();
+	private Random random = new Random(System.currentTimeMillis());
 
+	
+	@Override
+	public Account getAccount(String id) {
+
+		if(empMap.get(id) != null) {
+			return empMap.get(id);
+			
+		}
+		return null;
+	}
+
+
+	@Override
+	public Account createAccount(Account account) {
+
+		String newId = getId();
+		account.setId(Long.parseLong(newId));
+		account.setName(account.getName());
+		
+		empMap.put(newId, account);
+
+		return account;
+	}
+
+
+
+	private String getId() {
+		return String.valueOf(Math.abs(random.nextInt() % 1000));
+	}
 }

@@ -52,6 +52,36 @@ public interface AccountResource {
 					})
 	public Response findAllAccounts();
 	
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_JSON})
+	@ApiOperation(
+			value = "add Account Resource",
+			notes = "add the new account",
+			response = AccountResponse.class)
+	@ApiResponses(
+			value = {
+					@ApiResponse(code = 201, message = "created"),
+					@ApiResponse(code = 409, message = "conflict")					
+					})
+	public Response addAccount(Account newAccount);
+	
+	
+	@GET
+	@Produces({MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Path("/{id}")
+	@ApiOperation(
+			value = "get Account Resource",
+			notes = "get the  account by id",
+			response = AccountResponse.class)
+	@ApiResponses(
+			value = {
+					@ApiResponse(code = 201, message = "created"),
+					@ApiResponse(code = 409, message = "conflict")					
+					})
+	 public Response getAccountById(@PathParam("id") String id) ;
+	
 
 	
 }
