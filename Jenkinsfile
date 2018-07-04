@@ -2,7 +2,7 @@
 pipeline {
     agent {
         docker {
-            image 'maven:3-alpine' 
+            image 'vv2599/jenkins-slave-centos' 
             args '-v /root/.m2:/root/.m2' 
         }
     }
