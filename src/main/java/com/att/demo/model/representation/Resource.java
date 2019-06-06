@@ -27,7 +27,6 @@ public class Resource<T> {
 		return content;
 	}
 
-	@SuppressWarnings("unused")
 	private void setContent(T content) {
 		this.content = content;
 	}

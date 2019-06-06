@@ -9,7 +9,6 @@ import javax.ws.rs.client.ClientBuilder;
 
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.server.wadl.internal.WadlResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -66,7 +65,8 @@ public class JerseyConfiguration extends ResourceConfig {
      */
 	@Autowired
     public JerseyConfiguration() {
-		register(AccountResourceImpl.class);	
+		register(AccountResourceImpl.class);
+		register(UserResourceImpl.class);
 		
     }
 	
